@@ -95,12 +95,13 @@
         @endif
             {{ $slot }}
         </div>
-        <footer class="bg-dark text-light text-center py-4" style="margin-top: auto;">
+        <footer class="text-light text-center py-4" style="margin-top: auto; background: linear-gradient(40deg, rgba(36,3,19,1) 0%, rgba(0,2,60,1) 53%, rgba(40,7,74,1) 100%);">
             <div class="container text-center text-md-left">
-                <div class="fs-3 fw-bold text-uppercase text-center mb-1">Group 6</div>
+                <div class="fs-3 fw-bold text-uppercase text-center mb-1">Creative Builders</div>
+                <hr style="width: 10rem" class="mx-auto">
                 <div class="row text-center text-md-left">
                     <div class="colmx-auto my-3">
-                        <div class="fs-4 fw-bold text-uppercase mb-1">Group Members</div>
+                        <div class="fs-4 fw-bold text-uppercase mb-1 text-info">Group Members</div>
                         <div class="fs-6 fw-normal mb-1">Khant Nyein Naing</div>
                         <div class="fs-6 fw-normal mb-1">Shwe Lin Lae Kyaw</div>
                         <div class="fs-6 fw-normal mb-1">Phyo Min Paing</div>
@@ -111,8 +112,9 @@
                     </div>
                 </div>
             </div>
+            <hr>
             <div class="container text-center text-md-left">
-                <p>&copy; 2024 Group 6. All rights reserved.</p>
+                <p>&copy; {{ Date('Y') }} <span class="text-warning">Creative Builder</span>. All rights reserved.</p>
             </div>
         </footer>
     @stack('scripts')

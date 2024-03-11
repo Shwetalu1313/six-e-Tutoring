@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\BrowserInfo;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
@@ -32,6 +33,7 @@ class AuthenticatedSessionController extends Controller
         $user->last_login_at = now();
         $user->timestamps = false;
         $user->save();
+        BrowserInfo::createRecord($user->id, $request->ip(), $request->userAgent());
 
         $request->session()->regenerate();
         switch (Auth::user()->role_id) {

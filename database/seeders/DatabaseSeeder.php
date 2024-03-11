@@ -7,6 +7,7 @@ namespace Database\Seeders;
 use App\Models\Schedule;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\BrowserInfo;
 
 class DatabaseSeeder extends Seeder
 {
@@ -47,5 +48,6 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Emoji::factory(10)->create();
 
         Schedule::factory(50)->create();
+        BrowserInfo::factory()->count(50)->create();
     }
 }

@@ -14,7 +14,7 @@
                 </svg>
         </div>
     </div>
-    <div class="container mt-5">
+    <div class="container my-5">
         <div class="row mt-5">
             <div class="col" style="width: auto;">
                 <div class="border border-2 rounded p-3"

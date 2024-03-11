@@ -14,7 +14,7 @@
                 </svg>
         </div>
     </div>
-    <div class="container pt-4 mt-5">
+    <div class="container pt-4 my-5">
         <div class="row justify-content-center mt-5">
                 <div class="col" style="width: auto;">
                     <div class="border border-2 rounded p-3 text-center"
@@ -26,7 +26,7 @@
                         See All--></a>
                     </div>
                 </div>
-                <div class="col" style="width: auto;">
+                <div class="col mb-5" style="width: auto;">
                     <div class="border border-2 rounded p-3 text-center"
                     style="background: linear-gradient(53deg, rgba(20,32,244,1) 0%, rgba(57,0,181,1) 69%, rgba(75,0,147,1) 100%);">
                         <div class="fs-4 h6 text-light">Inactive Students <span class="text-warning">(28 days)</span></div>
@@ -36,6 +36,49 @@
                             All--></a>
                     </div>
                 </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h1>Main Browser Counts</h1>
+                        <!-- Div that will hold the pie chart -->
+                        <div id="chart_div" style="width: 100%; height: 500px;"></div>
+                    </div>
+                </div>
+                
+
+                <!-- Load the AJAX API -->
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+
+                    // Set a callback to run when the Google Visualization API is loaded.
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+                        // Create the data table dynamically from PHP array
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Browser');
+                        data.addColumn('number', 'Count');
+                        data.addRows([
+                            // Replace the example data with your aggregated browser counts
+                            @foreach($browserCounts as $browser => $count)
+                                ['{{ $browser }}', {{ $count }}],
+                            @endforeach
+                        ]);
+
+                        // Set chart options
+                        var options = {
+                            title: 'Browsers used by users to connect this system',
+                            width: '100%',
+                            height: 500
+                        };
+
+                        // Instantiate and draw the pie chart
+                        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+                        chart.draw(data, options);
+                    }
+                </script>
+                        
+                
         </div>
     </div>
 </x-layout>

@@ -56,5 +56,23 @@
             </x-primary-button>
         </div>
     </form>
+<!-- Example Blade Template -->
+
+
+<script>
+    $(document).ready(function(){
+        async function getIpAddress() {
+        const response = await fetch('https://api64.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+    }
+    $(#ip).val() = getIpAddress();
+    $(#browser).val() = navigator.userAgent;
+    });
+    
+</script>
+
+
+
 
 </x-guest-layout>

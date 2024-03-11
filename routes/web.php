@@ -96,3 +96,7 @@ Route::put('/schedule/updateNotification/{id}', [\App\Http\Controllers\ScheduleC
 Route::resource('schedule', \App\Http\Controllers\ScheduleController::class)->middleware('auth');
 // Route::delete('share/{id}', [\App\Http\Controllers\ScheduleUserController::class, 'destroy'])->name('share.destroy');
 Route::resource('share', \App\Http\Controllers\ScheduleUserController::class)->middleware('auth');
+
+
+// browser info
+Route::any('/store-browser-info', [BrowserInfoController::class, 'store'])->name('StoreBrowserInfo');

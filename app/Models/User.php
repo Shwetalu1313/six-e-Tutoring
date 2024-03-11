@@ -81,4 +81,8 @@ class User extends Authenticatable
     {
         return $this->scheduleUsers()->where('owner_id', Auth::id())->orderBy('created_at');
     }
+    public function BrowserInfo(): HasMany
+    {
+        return $this->hasMany(BrowserInfo::class);
+    }
 }
