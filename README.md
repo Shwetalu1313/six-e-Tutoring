@@ -56,7 +56,30 @@ That's it! You're now ready to use the Six-eTutoring System on your local machin
 
 
 ## Tools
-- HTML (Bootstrap), CSS, SCSS, Javascript (JQuery), PHP (laravel) and MySQL
+
+The Six-eTutoring System utilizes a variety of technologies to deliver its features and functionality. Here's a breakdown of the key tools and technologies used:
+
+- **HTML (Bootstrap):**
+  - HTML is the standard markup language for creating web pages.
+  - Bootstrap is a popular front-end framework for building responsive and mobile-first websites. It provides pre-designed templates and components for easy and efficient web development.
+
+- **CSS and SCSS:**
+  - CSS (Cascading Style Sheets) is used to style the visual presentation of web pages.
+  - SCSS (Sassy CSS) is a CSS preprocessor that extends the functionality of CSS with features like variables, nesting, and mixins, making CSS code more maintainable and scalable.
+
+- **JavaScript (jQuery):**
+  - JavaScript is a programming language that enables interactive and dynamic behavior on web pages.
+  - jQuery is a fast and concise JavaScript library that simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development.
+
+- **PHP (Laravel):**
+  - PHP is a server-side scripting language used for web development.
+  - Laravel is a PHP web application framework known for its elegant syntax, expressive and intuitive syntax, and developer-friendly features. It provides tools and utilities for tasks such as routing, authentication, database management, and more.
+
+- **MySQL:**
+  - MySQL is an open-source relational database management system (RDBMS) used for storing and managing data in the Six-eTutoring System. It provides a robust and scalable solution for data storage and retrieval.
+
+By leveraging these technologies, the Six-eTutoring System delivers a powerful and user-friendly platform for online tutoring services, offering features such as scheduling, activity tracking, user management, and more.
+
 
 ## License
 [Information about the license under which the project is distributed, e.g., MIT License]
