@@ -16,12 +16,44 @@ This project was developed by the Creative Builder group as part of a collaborat
 - **Reporting:** Provides static reports for authorised users and teachers.
 
 ## Usage
-- Be sure that your machine has already installed php.
-- php version is required at least 8.2^.
-- if all stuffs are surely complete, you need to follow these tips.  
-- download or clone this file to specific folder.
-- From cmd, make sure you are in this specific folder path
-- and run this command **php artisan serve**.
+
+Before starting, ensure that your machine has PHP installed, with a minimum version of 8.2^.
+
+Follow these steps to set up and run the Six-eTutoring System:
+
+1. **Download or Clone the Repository:**
+    - Download the repository ZIP file or clone it using Git to a specific folder on your machine.
+
+2. **Navigate to the Project Folder:**
+    - Open your command prompt (CMD) or terminal and change directory to the folder where you downloaded or cloned the repository.
+
+3. **Install Dependencies:**
+    - Run the following command to install the required dependencies:
+      ```
+      composer install
+      ```
+
+4. **Run Migration and Seed Database:**
+    - Execute database migrations to create the necessary tables:
+      ```
+      php artisan migrate
+      ```
+    - Optionally, seed the database with sample data:
+      ```
+      php artisan migrate:fresh --seed
+      ```
+
+5. **Start the Development Server:**
+    - Launch the Laravel development server by running the following command:
+      ```
+      php artisan serve
+      ```
+
+6. **Access the Application:**
+    - Once the server is running, open your web browser and navigate to `http://localhost:8000` to access the Six-eTutoring System.
+
+That's it! You're now ready to use the Six-eTutoring System on your local machine.
+
 
 ## Tools
 - HTML (Bootstrap), CSS, SCSS, Javascript (JQuery), PHP (laravel) and MySQL
