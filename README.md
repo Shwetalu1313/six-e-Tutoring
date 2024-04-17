@@ -40,7 +40,7 @@ Follow these steps to set up and run the Six-eTutoring System:
       ```
     - Optionally, seed the database with sample data:
       ```
-      php artisan migrate:fresh --seed
+      php artisan db:seed
       ```
 
 5. **Start the Development Server:**
