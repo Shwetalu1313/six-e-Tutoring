@@ -8,6 +8,7 @@ use App\Models\Schedule;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\BrowserInfo;
+use App\Models\Activity;
 
 class DatabaseSeeder extends Seeder
 {
@@ -49,5 +50,6 @@ class DatabaseSeeder extends Seeder
 
         Schedule::factory(50)->create();
         BrowserInfo::factory()->count(50)->create();
+        Activity::factory(70)->create();
     }
 }

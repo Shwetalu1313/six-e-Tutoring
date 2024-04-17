@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id','type','description'];
+    protected $guarded = [];
     public static function createLog($type, $description)
     {
         $activity = new Activity();

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\BrowserInfo;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -27,10 +29,12 @@ class DashboardController extends Controller
         }
         return redirect()->to($home);
     }
-    function showStaffDashboard() //From staff
+    function showStaffDashboard()
     {
+        // Retrieve inactive students
         $inactiveStudents = User::where('last_action_at', '<', now()->subDays(28))->get();
 
+        // Possible Browser List
         $browserMappings = [
             'chrome' => 'Chrome',
             'edg' => 'Edge',
@@ -51,15 +55,20 @@ class DashboardController extends Controller
             'chromium' => 'Chromium',
         ];
 
-        $students = DB::table('users')
-            ->select('users.*', 'roles.name as rolename')
-            ->leftJoin('roles', 'users.role_id', '=', 'roles.id')->WhereNull('users.current_tutor')
-            ->where('roles.name', '=', 'Student')
-            ->get();
+        // Retrieve students without a current tutor
+        $students = User::select('users.*', 'roles.name as rolename')
+                        ->leftJoin('roles', 'users.role_id', '=', 'roles.id')
+                        ->whereNull('users.current_tutor')
+                        ->where('roles.name', '=', 'Student')
+                        ->get();
 
+        // Retrieve browser information
         $browserInfos = BrowserInfo::all();
+
+        // Initialize browser counts array pr khin bya
         $browserCounts = [];
 
+        // Count browser occurrences
         foreach ($browserInfos as $browserInfo) {
             $found = false;
             foreach ($browserMappings as $substring => $browser) {
@@ -69,14 +78,47 @@ class DashboardController extends Controller
                     break;
                 }
             }
-            if(!$found){
+            if (!$found) {
                 $browserCounts[$browserInfo->browser] = ($browserCounts[$browserInfo->browser] ?? 0) + 1;
             }
         }
 
+        // Sort browser in order
         arsort($browserCounts);
 
-        return view('dashboard.staff', compact('students', 'inactiveStudents', 'browserCounts'));
+        $startOfMonth = Carbon::now()->startOfMonth();
+
+        // Retrieve activities within the current month up to the current date
+        $mostActiveUsers = Activity::select('user_id', DB::raw('count(*) as activity_count'))
+                            ->join('users', 'activities.user_id', '=', 'users.id')
+                            ->where('activities.created_at', '>=', $startOfMonth)
+                            ->where('activities.created_at', '<=', now())
+                            ->whereNotIn('users.role_id', [1, 2]) // Exclude users with role IDs 1 and 2
+                            ->groupBy('user_id')
+                            ->orderByDesc('activity_count')
+                            ->limit(10) // Adjust the limit as needed
+                            ->get();
+
+
+
+        // Retrieve user names for the most active users
+        $userIds = $mostActiveUsers->pluck('user_id');
+        $users = User::whereIn('id', $userIds)->get();
+
+        // Associate each user ID with their name
+        $activeUsersWithNames = [];
+        foreach ($mostActiveUsers as $activity) {
+            $user = $users->where('id', $activity->user_id)->first();
+            if ($user) {
+                $activeUsersWithNames[] = [
+                    'user_id' => $activity->user_id,
+                    'name' => $user->name,
+                    'activity_count' => $activity->activity_count
+                ];
+            }
+        }
+
+        return view('dashboard.staff', compact('students', 'inactiveStudents', 'browserCounts', 'activeUsersWithNames'));
     }
 
     function showTutorDashboard()

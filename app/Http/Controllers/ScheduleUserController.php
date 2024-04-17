@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Schedule;
 use App\Models\ScheduleUser;
 use App\Models\User;
@@ -38,43 +39,59 @@ class ScheduleUserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
-        ]);
+    $data = $request->validate([
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+        'schedule_id' => ['required', 'exists:schedules,id'], // Assuming 'schedule_id' is passed in the request
+    ]);
 
-        // Retrieve the user with the provided email
-        $user = User::where('email', $data['email'])->first();
+    // Retrieve the user with the provided email
+    $user = User::where('email', $data['email'])->first();
 
-        if ($user) {
-            $user_id = $user->id;
-            $owner_id = Auth::id();
-            $schedule_id = $request->input('schedule_id');
+    if ($user->role->id === 1) {
+        return redirect()->back()->with('error', 'The schedule can only share between tutor and students.');
+    }
 
-            // Check if the user is already associated with the schedule
-            $existingScheduleUser = ScheduleUser::where([
-                'schedule_id' => $schedule_id,
-                'user_id' => $user_id,
-                'owner_id' => $owner_id,
-            ])->first();
+    if ($data['email'] === Auth::user()->email) {
+        return redirect()->back()->with('error', 'You cannot share your own.');
+    }
 
-            if ($existingScheduleUser) {
-                return redirect()->back()->with('error', 'This schedule is already shared with ' . $user->name);
-            }
+    // Retrieve the schedule with the provided ID
+    $schedule = Schedule::findOrFail($data['schedule_id']);
 
-            // Create a new ScheduleUser record
-            $scheduleUser = ScheduleUser::create([
-                'schedule_id' => $schedule_id,
-                'user_id' => $user_id,
-                'owner_id' => $owner_id,
-            ]);
+    if ($user) {
+        $user_id = $user->id; 
+        $user_name = $user->name; 
+        $owner_id = Auth::id();
+        $schedule_id = $schedule->id; 
+        $schedule_title = $schedule->title; 
 
-            if ($scheduleUser) {
-                return redirect()->back()->with('success', 'This schedule is shared with ' . $user->name);
-            }
+        // Check if the user is already associated with the schedule
+        $existingScheduleUser = ScheduleUser::where([
+            'schedule_id' => $schedule_id,
+            'user_id' => $user_id,
+            'owner_id' => $owner_id,
+        ])->first();
+
+        if ($existingScheduleUser) {
+            return redirect()->back()->with('error', 'This schedule is already shared with ' . $user_name);
         }
 
-        return redirect()->back()->with('error', 'No user found with the provided email');
+        // Create a new ScheduleUser record
+        $scheduleUser = ScheduleUser::create([
+            'schedule_id' => $schedule_id,
+            'user_id' => $user_id,
+            'owner_id' => $owner_id,
+        ]);
+
+        if ($scheduleUser) {
+            Activity::createLog('schedule', "You shared a schedule '$schedule_title' with $user_name");
+            return redirect()->back()->with('success', 'This schedule is shared with ' . $user_name);
+        }
     }
+
+    return redirect()->back()->with('error', 'No user found with the provided email');
+    }
+
 
 
     /**
@@ -108,7 +125,16 @@ class ScheduleUserController extends Controller
     {
         $schedule = ScheduleUser::findOrFail($id);
 
+        // Get schedule details before deleting it
+        $scheduleTitle = $schedule->schedule->title;
+        $userName = $schedule->user->name;
+
         $schedule->delete();
+
+        // Create activity log for the deletion
+        Activity::createLog('schedule', "You deleted shared schedule '$scheduleTitle' with $userName");
+
         return redirect()->back()->with('success', 'Shared schedule deleted successfully');
     }
+
 }

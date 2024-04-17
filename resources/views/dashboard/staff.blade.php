@@ -43,6 +43,41 @@
                         <div id="chart_div" style="width: 100%; height: 500px;"></div>
                     </div>
                 </div>
+
+                <div class="table-responsive my-5 ">
+                    <h3>The Most Active Users List for This Month ({{ Date('M-Y') }})</h3>
+                    <small class="text-black">Staff roles are not counting.</small>
+                    <small class="text-danger">Top 10 List.</small>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>NO.</th>
+                                <th>Name</th>
+                                <th>Activity Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $counter = 1;
+                            @endphp
+                            @foreach ($activeUsersWithNames as $user)
+                                
+                                <tr>
+                                    <td>{{ $counter }}</td>
+                                    <td>
+                                        <a href="{{ route('user-profile', ['user' => $user['user_id']]) }}"
+                                        class="text-decoration-none">
+                                        {{ $user['name'] }}
+                                        </a></td>
+                                    <td>{{ $user['activity_count'] }}</td>
+                                </tr>
+                                @php
+                                    $counter++;
+                                @endphp
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
                 
 
                 <!-- Load the AJAX API -->
