@@ -107,7 +107,7 @@
                         <div class="fs-6 fw-normal mb-1">Phyo Min Paing</div>
                         <div class="fs-6 fw-normal mb-1">Hnin Nandar Aung</div>
                         <div class="fs-6 fw-normal mb-1">Htoo Pyae Aung</div>
-                        <div class="fs-6 fw-normal mb-1">Loon Pann Phyu</div>
+                        <div class="fs-6 fw-normal mb-1">Loon Pan Phyu</div>
                         <div class="fs-6 fw-normal mb-1">Pyae Sone</div>
                     </div>
                 </div>
