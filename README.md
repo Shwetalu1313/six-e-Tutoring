@@ -3,7 +3,7 @@
 ## Overview
 The Six-eTutoring System is a web application developed using Laravel and MySQL, designed to facilitate online tutoring services. This system enables efficient scheduling, activity tracking, tutor allocation, user registration, blog management, account moderation, and reporting functionalities. 
 
-This project was developed by the Creative Builder group as part of a collaborative effort.
+This project was developed by the **Creative Builders** group as part of a collaborative effort.
 
 ## Features
 - **Scheduling:** Users can view and manage schedules through a calendar interface. They can also share schedules with other users.
