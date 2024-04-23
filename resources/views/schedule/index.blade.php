@@ -1,6 +1,6 @@
 
 <x-layout>
-    <div class="row g-4">
+    <div class="row g-4 mb-5">
         @include('schedule.createPg.leftSide')
         {{--end left side--}}
 
