@@ -128,9 +128,9 @@ class ScheduleController extends Controller
             'date' => 'required|date',
             'time' => 'required',
             'locationType' => 'required|string|max:255',
-            'location_reality' => 'nullable|string',
-            'location_virtual' => 'nullable|url',
-            'description' => 'nullable|string',
+            'location_reality' => 'nullable|string|max:255',
+            'location_virtual' => 'nullable|url|max:255',
+            'description' => 'nullable|string|max:255',
             'important' => 'nullable|boolean',
             'notify' => 'nullable|boolean',
         ]);
